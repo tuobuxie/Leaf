@@ -42,7 +42,7 @@
         <maven.compiler.version>3.5.1</maven.compiler.version>
         <mybatis.version>3.3.0</mybatis.version>
         <perf4j.version>0.9.16</perf4j.version>
-        <curator.version>2.6.0</curator.version>
+        <curator.version>4.0.1</curator.version>
         <slf4j.version>1.7.2</slf4j.version>
         <druid.version>1.0.18</druid.version>
         <jackson-databind.version>2.9.6</jackson-databind.version>
