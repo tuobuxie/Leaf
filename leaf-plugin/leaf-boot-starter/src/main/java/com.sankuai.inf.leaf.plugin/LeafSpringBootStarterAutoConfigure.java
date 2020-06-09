@@ -2,6 +2,7 @@ package com.sankuai.inf.leaf.plugin;
 
 import com.sankuai.inf.leaf.exception.InitException;
 import com.sankuai.inf.leaf.service.SegmentService;
+import com.sankuai.inf.leaf.service.SnowflakeIDCService;
 import com.sankuai.inf.leaf.service.SnowflakeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +40,17 @@ public class LeafSpringBootStarterAutoConfigure {
             return snowflakeService;
         }
         logger.warn("init leaf snowflake ignore properties is {}", properties);
+        return null;
+    }
+
+
+    @Bean
+    public SnowflakeIDCService initLeafSnowflakeIDCStarter() throws InitException {
+        if (properties != null && properties.getSnowflake() != null && properties.getSnowflake().isIdcenable()) {
+            SnowflakeIDCService snowflakeService = new SnowflakeIDCService(properties.getSnowflake().getAddress(), properties.getSnowflake().getPort(),properties.getSnowflake().getIdc());
+            return snowflakeService;
+        }
+        logger.warn("init leaf snowflake idc ignore properties is {}", properties);
         return null;
     }
 }

@@ -3,10 +3,12 @@ package com.sankuai.inf.leaf.server.controller;
 import com.sankuai.inf.leaf.common.Result;
 import com.sankuai.inf.leaf.common.Status;
 import com.sankuai.inf.leaf.service.SegmentService;
+import com.sankuai.inf.leaf.service.SnowflakeIDCService;
 import com.sankuai.inf.leaf.service.SnowflakeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,10 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class LeafController {
     private Logger logger = LoggerFactory.getLogger(LeafController.class);
 
-    @Autowired
+    @Autowired(required = false)
     private SegmentService segmentService;
-    @Autowired
+    @Autowired(required = false)
     private SnowflakeService snowflakeService;
+    @Autowired(required = false)
+    private SnowflakeIDCService snowflakeIDCService;
 
     @RequestMapping(value = "/api/segment/get/{key}")
     public String getSegmentId(@PathVariable("key") String key) {
@@ -30,6 +34,15 @@ public class LeafController {
         return get(key, snowflakeService.getId(key));
     }
 
+    @RequestMapping(value = "/api/snowflakeIDC/get/{key}")
+    public String getSnowflakeIDCId(@PathVariable("key") String key) {
+        return get(key, snowflakeIDCService.getId(key));
+    }
+    @RequestMapping(value = "/api/snowflakeIDC")
+    public String getSnowflakeIDCId() {
+        String key = "default";
+        return get(key, snowflakeIDCService.getId(key));
+    }
     private String get(@PathVariable("key") String key, Result id) {
         Result result;
         if (key == null || key.isEmpty()) {

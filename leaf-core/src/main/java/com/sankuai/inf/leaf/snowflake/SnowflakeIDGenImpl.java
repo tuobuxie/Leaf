@@ -19,17 +19,17 @@ public class SnowflakeIDGenImpl implements IDGen {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SnowflakeIDGenImpl.class);
 
-    private final long twepoch;
+    protected final long twepoch;
     private final long workerIdBits = 10L;
     private final long maxWorkerId = ~(-1L << workerIdBits);//最大能够分配的workerid =1023
-    private final long sequenceBits = 12L;
+    protected final long sequenceBits = 12L;
     private final long workerIdShift = sequenceBits;
     private final long timestampLeftShift = sequenceBits + workerIdBits;
-    private final long sequenceMask = ~(-1L << sequenceBits);
-    private long workerId;
-    private long sequence = 0L;
-    private long lastTimestamp = -1L;
-    private static final Random RANDOM = new Random();
+    protected final long sequenceMask = ~(-1L << sequenceBits);
+    protected long workerId;
+    protected long sequence = 0L;
+    protected long lastTimestamp = -1L;
+    protected static final Random RANDOM = new Random();
 
     public SnowflakeIDGenImpl(String zkAddress, int port) {
         //Thu Nov 04 2010 09:42:54 GMT+0800 (中国标准时间) 

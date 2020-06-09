@@ -62,8 +62,27 @@ public class LeafSpringBootProperties {
     }
     public static class Snowflake{
         private boolean enable =false;
+        private boolean idcenable =false;
         private String address;
         private int port;
+        private long idc;
+
+        public boolean isIdcenable() {
+            return idcenable;
+        }
+
+        public void setIdcenable(boolean idcenable) {
+            this.idcenable = idcenable;
+        }
+
+        public long getIdc() {
+            return idc;
+        }
+
+        public void setIdc(long idc) {
+            this.idc = idc;
+        }
+
         public String getAddress() {
             return address;
         }

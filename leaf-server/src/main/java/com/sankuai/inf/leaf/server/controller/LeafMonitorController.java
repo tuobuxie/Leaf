@@ -100,4 +100,39 @@ public class LeafMonitorController {
         }
         return map;
     }
+
+    /**
+     * the output is like this:
+     * {
+     *   "timestamp": "1567733700834(2019-09-06 09:35:00.834)",
+     *   "sequenceId": "3448",
+     *   "workerId": "39"
+     *   "idcId": "1"
+     * }
+     */
+    @RequestMapping(value = "decodeSnowflakeIDCId")
+    @ResponseBody
+    public Map<String, String> decodeSnowflakeIDCId(@RequestParam("snowflakeId") String snowflakeIdStr) {
+        Map<String, String> map = new HashMap<>();
+        try {
+            long snowflakeId = Long.parseLong(snowflakeIdStr);
+
+            long originTimestamp = (snowflakeId >> 22) + 1288834974657L;
+            Date date = new Date(originTimestamp);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+            map.put("timestamp", String.valueOf(originTimestamp) + "(" + sdf.format(date) + ")");
+
+            long idcId = (snowflakeId >> 19)^ (snowflakeId >> 22 << 3);
+            map.put("idcId", String.valueOf(idcId));
+
+            long workerId = (snowflakeId >> 12) ^ (snowflakeId >> 19 << 7);
+            map.put("workerId", String.valueOf(workerId));
+
+            long sequence = snowflakeId ^ (snowflakeId >> 12 << 12);
+            map.put("sequenceId", String.valueOf(sequence));
+        } catch (NumberFormatException e) {
+            map.put("errorMsg", "snowflake Id反解析发生异常!");
+        }
+        return map;
+    }
 }
