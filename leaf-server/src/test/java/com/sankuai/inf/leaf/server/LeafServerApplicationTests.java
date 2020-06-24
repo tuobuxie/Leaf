@@ -13,7 +13,7 @@ public class LeafServerApplicationTests {
 	@Test
 	public void contextLoads() {
 		RestTemplate restTemplate = new RestTemplate();
-		String forObject = restTemplate.getForObject("http://127.0.0.1:8080/api/snowflakeIDC", String.class);
+		String forObject = restTemplate.getForObject("http://172.20.8.5:8080/api/snowflakeIDC", String.class);
 		System.out.println(forObject);
 	}
 

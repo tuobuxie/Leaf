@@ -27,6 +27,7 @@ public class LeafSpringBootStarterAutoConfigure {
     public SegmentService initLeafSegmentStarter() throws Exception {
         if (properties != null && properties.getSegment() != null && properties.getSegment().isEnable()) {
             SegmentService segmentService = new SegmentService(properties.getSegment().getUrl(), properties.getSegment().getUsername(), properties.getSegment().getPassword());
+            logger.info("init leaf segment properties is {}", properties);
             return segmentService;
         }
         logger.warn("init leaf segment ignore properties is {}", properties);
@@ -37,6 +38,7 @@ public class LeafSpringBootStarterAutoConfigure {
     public SnowflakeService initLeafSnowflakeStarter() throws InitException {
         if (properties != null && properties.getSnowflake() != null && properties.getSnowflake().isEnable()) {
             SnowflakeService snowflakeService = new SnowflakeService(properties.getSnowflake().getAddress(), properties.getSnowflake().getPort());
+            logger.info("init leaf snowflake  properties is {}", properties);
             return snowflakeService;
         }
         logger.warn("init leaf snowflake ignore properties is {}", properties);
@@ -48,6 +50,7 @@ public class LeafSpringBootStarterAutoConfigure {
     public SnowflakeIDCService initLeafSnowflakeIDCStarter() throws InitException {
         if (properties != null && properties.getSnowflake() != null && properties.getSnowflake().isIdcenable()) {
             SnowflakeIDCService snowflakeService = new SnowflakeIDCService(properties.getSnowflake().getAddress(), properties.getSnowflake().getPort(),properties.getSnowflake().getIdc());
+            logger.info("init leaf snowflake idc properties is {}", properties);
             return snowflakeService;
         }
         logger.warn("init leaf snowflake idc ignore properties is {}", properties);
